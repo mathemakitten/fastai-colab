@@ -15,6 +15,7 @@ from keras.layers.convolutional import Conv2D, MaxPooling2D, ZeroPadding2D
 from keras.layers.pooling import GlobalAveragePooling2D
 from keras.optimizers import SGD, RMSprop, Adam
 from keras.preprocessing import image
+from keras.utils.layer_utils import convert_all_kernels_in_model
 
 # In case we are going to use the TensorFlow backend we need to explicitly set the Theano image ordering
 from keras import backend as K
@@ -138,7 +139,7 @@ class Vgg16():
 
         fname = 'vgg16.h5'
         model.load_weights(get_file(fname, self.FILE_PATH+fname, cache_subdir='models'))
-
+        convert_all_kernels_in_model(model)
 
     def get_batches(self, path, gen=image.ImageDataGenerator(), shuffle=True, batch_size=8, class_mode='categorical'):
         """
